@@ -1,8 +1,8 @@
 import {RiDeleteBin2Line, RiTodoFill} from 'react-icons/ri'
 import {FaCheck} from 'react-icons/fa'
-import styles from './Todo.module.css'
+import styles from './Item.module.scss'
 
-function Todo({todo, deleteTodo, toggleTodo}) {
+function Item({todo, deleteTodo, toggleTodo}) {
     return (
         <div className={`${styles.todo} ${
             todo.isCompleted ? styles.completedTodo : ''
@@ -21,4 +21,4 @@ function Todo({todo, deleteTodo, toggleTodo}) {
     )
 }
 
-export default Todo
+export default Item

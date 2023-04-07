@@ -1,9 +1,9 @@
 import {useState} from 'react'
 import {v4 as uuidv4} from 'uuid'
-import TodoForm from './components/Todos/TodoForm'
-import TodoList from './components/Todos/TodoList'
-import TodosActions from './components/Todos/TodosActions'
-import './App.css'
+import ItemForm from './components/Todos/ItemForm'
+import ItemList from './components/Todos/ItemList'
+import ItemsActions from './components/Todos/ItemsActions'
+import './App.scss'
 
 function App() {
     const [todos, setTodos] = useState([])
@@ -42,14 +42,14 @@ function App() {
     return (
         <div className="App">
             <h1>Todo App</h1>
-            <TodoForm addTodo={addTodoHandler}/>
+            <ItemForm addTodo={addTodoHandler}/>
             {!!todos.length && (
-                <TodosActions
+                <ItemsActions
                     completedTodosExist={!!completedTodosCount}
                     resetTodos={resetTodosHandler}
                     deleteCompletedTodos={deleteCompletedTodosHandler}
                 />)}
-            <TodoList
+            <ItemList
                 todos={todos}
                 deleteTodo={deleteTodoHandler}
                 toggleTodo={toggleTodoHandler}

@@ -1,8 +1,8 @@
 import {useState} from 'react'
-import styles from './TodoForm.module.css'
+import styles from './ItemForm.module.scss'
 import Button from '../UI/Button'
 
-function TodoForm({addTodo}) {
+function ItemForm({addTodo}) {
     const [text, setText] = useState('')
     const onSubmitHandler = (event) => {
         event.preventDefault()
@@ -26,4 +26,4 @@ function TodoForm({addTodo}) {
     )
 }
 
-export default TodoForm
+export default ItemForm

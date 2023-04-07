@@ -1,12 +1,12 @@
-import Todo from './Todo'
-import styles from './TodoList.module.css'
+import Item from './Item'
+import styles from './ItemList.module.scss'
 
-function TodoList({todos, deleteTodo, toggleTodo}) {
+function ItemList({todos, deleteTodo, toggleTodo}) {
     return (
         <div className={styles.todoListContainer}>
             {!todos.length && <h2>Todo list is empty</h2>}
             {todos.map((todo) => (
-                <Todo
+                <Item
                     key={todo.id}
                     todo={todo}
                     deleteTodo={deleteTodo}
@@ -17,4 +17,4 @@ function TodoList({todos, deleteTodo, toggleTodo}) {
     )
 }
 
-export default TodoList
+export default ItemList

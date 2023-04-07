@@ -1,3 +1,4 @@
+import React from 'react'
 import {useState} from 'react'
 import {v4 as uuidv4} from 'uuid'
 import ItemForm from './components/Todos/ItemForm'
@@ -6,9 +7,9 @@ import ItemsActions from './components/Todos/ItemsActions'
 import './App.scss'
 
 function App() {
-    const [todos, setTodos] = useState([])
+    const [todos, setTodos]: any = useState([])
 
-    const addTodoHandler = (text) => {
+    const addTodoHandler = (text: any) => {
         const newTodo = {
             text,
             isCompleted: false,
@@ -17,12 +18,12 @@ function App() {
         setTodos([...todos, newTodo])
     }
 
-    const deleteTodoHandler = (id) => {
-        setTodos(todos.filter((todo) => todo.id !== id))
+    const deleteTodoHandler = (id: any) => {
+        setTodos(todos.filter((todo: any) => todo.id !== id))
     }
 
-    const toggleTodoHandler = (id) => {
-        setTodos(todos.map((todo) =>
+    const toggleTodoHandler = (id: any) => {
+        setTodos(todos.map((todo: any) =>
             todo.id === id
                 ? {...todo, isCompleted: !todo.isCompleted}
                 : {...todo}
@@ -34,10 +35,10 @@ function App() {
     }
 
     const deleteCompletedTodosHandler = () => {
-        setTodos(todos.filter((todo) => !todo.isCompleted))
+        setTodos(todos.filter((todo: any) => !todo.isCompleted))
     }
 
-    const completedTodosCount = todos.filter((todo) => todo.isCompleted).length
+    const completedTodosCount = todos.filter((todo: any) => todo.isCompleted).length
 
     return (
         <div className="App">

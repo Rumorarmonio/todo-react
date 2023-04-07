@@ -1,6 +1,7 @@
+import React from 'react'
 import styles from './Button.module.scss'
 
-function Button(props) {
+function Button(props: any) {
     const {children, disabled = false} = props
     return (
         <button

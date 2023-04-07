@@ -1,8 +1,9 @@
+import React from 'react'
 import {RiDeleteBin2Line, RiTodoFill} from 'react-icons/ri'
 import {FaCheck} from 'react-icons/fa'
 import styles from './Item.module.scss'
 
-function Item({todo, deleteTodo, toggleTodo}) {
+function Item({todo, deleteTodo, toggleTodo}: any) {
     return (
         <div className={`${styles.todo} ${
             todo.isCompleted ? styles.completedTodo : ''

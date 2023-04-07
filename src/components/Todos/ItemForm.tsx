@@ -1,10 +1,11 @@
+import React from 'react'
 import {useState} from 'react'
 import styles from './ItemForm.module.scss'
 import Button from '../UI/Button'
 
-function ItemForm({addTodo}) {
+function ItemForm({addTodo}: any) {
     const [text, setText] = useState('')
-    const onSubmitHandler = (event) => {
+    const onSubmitHandler = (event: any) => {
         event.preventDefault()
         addTodo(text)
         setText('')

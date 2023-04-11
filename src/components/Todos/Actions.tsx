@@ -3,19 +3,19 @@ import {RiDeleteBin2Line, RiRefreshLine} from 'react-icons/ri'
 import Button from '../UI/Button'
 import styles from './Actions.module.scss'
 
-function Actions({resetTodos, deleteCompletedTodos, completedTodosExist}: any) {
+function Actions({resetTasks, deleteCompletedTasks, completedTasksExist, filterNames, setFilter}: any) {
     return (
-        <div className={styles.actionsContainer}>
+        <div className={styles.container}>
             <Button
                 title="Reset Todos"
-                onClick={resetTodos}
+                onClick={resetTasks}
             >
                 <RiRefreshLine/>
             </Button>
             <Button
                 title="Clear Completed Todos"
-                onClick={deleteCompletedTodos}
-                disabled={!completedTodosExist}
+                onClick={deleteCompletedTasks}
+                disabled={!completedTasksExist}
             >
                 <RiDeleteBin2Line/>
             </Button>

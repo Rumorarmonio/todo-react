@@ -1,26 +1,16 @@
 import React, {useEffect, useRef, useState} from 'react'
 import {RiDeleteBin2Line, RiTodoFill, RiEdit2Line} from 'react-icons/ri'
 import {FaCheck} from 'react-icons/fa'
-import styles from './Card.module.scss'
+import styles from './Item.module.scss'
 import Button from '../UI/Button'
 
-function usePrevious(value: any) {
-    const ref = useRef()
-    useEffect(() => {
-        ref.current = value
-    })
-    return ref.current
-}
-
-function Card({todo, editTodo, deleteTodo, toggleTodo}: any) {
+function Item({task, editTask, deleteTask, toggleTask}: any) {
     const [isEditing, setEditing] = useState(false)
     const [newText, setNewText] = useState('')
 
-    const wasEditing = usePrevious(isEditing)
-
     function handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
-        editTodo(todo.id, newText)
+        editTask(task.id, newText)
         setEditing(false)
     }
 
@@ -36,15 +26,15 @@ function Card({todo, editTodo, deleteTodo, toggleTodo}: any) {
             >
                 <label
                     className="todo-label"
-                    htmlFor={todo.id}
+                    htmlFor={task.id}
                 >
-                    New text for {todo.text}
+                    New text for {task.text}
                 </label>
                 <input
-                    id={todo.id}
+                    id={task.id}
                     className={styles.todo__input}
                     type="text"
-                    value={newText || todo.text}
+                    value={newText || task.text}
                     onChange={handleChange}
                 />
                 <Button
@@ -62,21 +52,21 @@ function Card({todo, editTodo, deleteTodo, toggleTodo}: any) {
 
     const viewTemplate = (
         <li className={`${styles.todo} ${
-            todo.isCompleted ? styles.completedTodo : ''
+            task.isCompleted ? styles.completedTodo : ''
         }`}>
             <RiTodoFill className={styles.todoIcon}/>
-            <p className={styles.todoText}>{todo.text}</p>
+            <p className={styles.todoText}>{task.text}</p>
             <RiEdit2Line
                 className={styles.editIcon}
                 onClick={() => setEditing(true)}
             />
             <RiDeleteBin2Line
                 className={styles.deleteIcon}
-                onClick={() => deleteTodo(todo.id)}
+                onClick={() => deleteTask(task.id)}
             />
             <FaCheck
                 className={styles.checkIcon}
-                onClick={() => toggleTodo(todo.id)}
+                onClick={() => toggleTask(task.id)}
             />
         </li>
     )
@@ -84,4 +74,4 @@ function Card({todo, editTodo, deleteTodo, toggleTodo}: any) {
     return isEditing ? editingTemplate : viewTemplate
 }
 
-export default Card
+export default Item

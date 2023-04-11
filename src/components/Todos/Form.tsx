@@ -2,11 +2,11 @@ import React, {useState} from 'react'
 import styles from './Form.module.scss'
 import Button from '../UI/Button'
 
-function Form({addTodo}: any) {
+function Form({addTask}: any) {
     const [text, setText] = useState('')
     const onSubmitHandler = (event: React.SyntheticEvent) => {
         event.preventDefault()
-        addTodo(text)
+        addTask(text)
         setText('')
     }
 

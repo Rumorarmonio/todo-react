@@ -1,4 +1,4 @@
-export class Todo {
+export class Task {
     text: string
     isCompleted: boolean
     id: string

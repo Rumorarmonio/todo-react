@@ -1,19 +1,19 @@
 import React from 'react'
-import Card from './Card'
+import Item from './Item'
 import styles from './List.module.scss'
-import {Todo} from "../../models";
+import {Task} from '../../models'
 
-function List({todos, editTodo, deleteTodo, toggleTodo}: any) {
+function List({tasks, editTask, deleteTask, toggleTask}: any) {
     return (
         <ul className={styles.listContainer}>
-            {!todos.length && <h2>Todo list is empty</h2>}
-            {todos.map((todo: Todo) => (
-                <Card
-                    key={todo.id}
-                    todo={todo}
-                    editTodo={editTodo}
-                    deleteTodo={deleteTodo}
-                    toggleTodo={toggleTodo}
+            {!tasks.length && <h2>Nothing to show</h2>}
+            {tasks.map((task: Task) => (
+                <Item
+                    key={task.id}
+                    task={task}
+                    editTask={editTask}
+                    deleteTask={deleteTask}
+                    toggleTask={toggleTask}
                 />
             ))}
         </ul>

@@ -3,78 +3,86 @@ import {v4 as uuidv4} from 'uuid'
 import Form from './components/Todos/Form'
 import List from './components/Todos/List'
 import Actions from './components/Todos/Actions'
-import {Todo} from './models'
+import {Task} from './models'
 import './App.scss'
+import Sorting from './components/Todos/Sorting'
 
-const FILTER_MAP = {
+const FILTER_MAP: any = {
     All: () => true,
-    Active: (task: Todo) => !task.isCompleted,
-    Completed: (task: Todo) => task.isCompleted
-};
+    Active: (task: Task) => !task.isCompleted,
+    Completed: (task: Task) => task.isCompleted
+}
 
-const FILTER_NAMES = Object.keys(FILTER_MAP);
+const FILTER_NAMES = Object.keys(FILTER_MAP)
 
 function App() {
-    const [todos, setTodos] = useState<Todo[]>([])
+    const [tasks, setTasks] = useState<Task[]>([])
+    const [filter, setFilter] = useState<string>('All')
 
-    const addTodoHandler = (text: string): void => {
-        const newTodo: Todo = {
+    const addTaskHandler = (text: string): void => {
+        const newTask: Task = {
             text,
             isCompleted: false,
             id: uuidv4()
         }
-        setTodos([...todos, newTodo])
+        setTasks([...tasks, newTask])
     }
 
-    const editTodoHandler = (id: string, newText: string): void => {
-        setTodos(todos.map((todo: Todo) =>
-            todo.id === id
-                ? {...todo, text: newText}
-                : {...todo}
+    const editTaskHandler = (id: string, newText: string): void => {
+        setTasks(tasks.map((task: Task) =>
+            task.id === id
+                ? {...task, text: newText}
+                : {...task}
         ))
     }
 
-    const deleteTodoHandler = (id: string): void => {
-        setTodos(todos.filter((todo: Todo) => todo.id !== id))
+    const deleteTaskHandler = (id: string): void => {
+        setTasks(tasks.filter((task: Task) => task.id !== id))
     }
 
-    const toggleTodoHandler = (id: string): void => {
-        setTodos(todos.map((todo: Todo) =>
-            todo.id === id
-                ? {...todo, isCompleted: !todo.isCompleted}
-                : {...todo}
+    const toggleTaskHandler = (id: string): void => {
+        setTasks(tasks.map((task: Task) =>
+            task.id === id
+                ? {...task, isCompleted: !task.isCompleted}
+                : {...task}
         ))
     }
 
-    const resetTodosHandler = (): void => {
-        setTodos([])
+    const resetTasksHandler = (): void => {
+        setTasks([])
     }
 
-    const deleteCompletedTodosHandler = (): void => {
-        setTodos(todos.filter((todo: Todo) => !todo.isCompleted))
+    const deleteCompletedTasksHandler = (): void => {
+        setTasks(tasks.filter((task: Task) => !task.isCompleted))
     }
 
-    const completedTodosCount: number = todos.filter((todo: Todo) => todo.isCompleted).length
+    const completedTasksCount: number = tasks.filter((task: Task) => task.isCompleted).length
+
+    const taskList: Task[] = tasks.filter(FILTER_MAP[filter])
 
     return (
         <div className="App">
-            <h1>Todo App</h1>
-            <Form addTodo={addTodoHandler}/>
-            {!!todos.length && (
+            <h1>Todo List</h1>
+            <Form addTask={addTaskHandler}/>
+            {!!tasks.length && (
                 <Actions
-                    completedTodosExist={!!completedTodosCount}
-                    resetTodos={resetTodosHandler}
-                    deleteCompletedTodos={deleteCompletedTodosHandler}
+                    completedTasksExist={!!completedTasksCount}
+                    resetTasks={resetTasksHandler}
+                    deleteCompletedTasks={deleteCompletedTasksHandler}
                 />)}
-            <List
-                todos={todos}
-                editTodo={editTodoHandler}
-                deleteTodo={deleteTodoHandler}
-                toggleTodo={toggleTodoHandler}
+            <Sorting
+                filterNames={FILTER_NAMES}
+                setFilter={setFilter}
             />
-            {completedTodosCount > 0 &&
-                <h2>{`You have completed ${completedTodosCount} 
-                ${completedTodosCount > 1 ? 'todos' : 'todo'}!`}
+            <List
+                tasks={taskList}
+                editTask={editTaskHandler}
+                deleteTask={deleteTaskHandler}
+                toggleTask={toggleTaskHandler}
+            />
+            {completedTasksCount > 0 &&
+                <h2>{`You have completed ${completedTasksCount}
+                ${completedTasksCount > 1 ? 'tasks' : 'task'}!`}
                 </h2>
             }
         </div>

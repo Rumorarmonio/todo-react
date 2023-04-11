@@ -1,16 +1,24 @@
-import React from 'react'
-import {useState} from 'react'
+import React, {useState} from 'react'
 import {v4 as uuidv4} from 'uuid'
-import ItemForm from './components/Todos/ItemForm'
-import ItemList from './components/Todos/ItemList'
-import ItemsActions from './components/Todos/ItemsActions'
+import Form from './components/Todos/Form'
+import List from './components/Todos/List'
+import Actions from './components/Todos/Actions'
+import {Todo} from './models'
 import './App.scss'
 
-function App() {
-    const [todos, setTodos]: any = useState([])
+const FILTER_MAP = {
+    All: () => true,
+    Active: (task: Todo) => !task.isCompleted,
+    Completed: (task: Todo) => task.isCompleted
+};
 
-    const addTodoHandler = (text: any) => {
-        const newTodo = {
+const FILTER_NAMES = Object.keys(FILTER_MAP);
+
+function App() {
+    const [todos, setTodos] = useState<Todo[]>([])
+
+    const addTodoHandler = (text: string): void => {
+        const newTodo: Todo = {
             text,
             isCompleted: false,
             id: uuidv4()
@@ -18,40 +26,49 @@ function App() {
         setTodos([...todos, newTodo])
     }
 
-    const deleteTodoHandler = (id: any) => {
-        setTodos(todos.filter((todo: any) => todo.id !== id))
+    const editTodoHandler = (id: string, newText: string): void => {
+        setTodos(todos.map((todo: Todo) =>
+            todo.id === id
+                ? {...todo, text: newText}
+                : {...todo}
+        ))
     }
 
-    const toggleTodoHandler = (id: any) => {
-        setTodos(todos.map((todo: any) =>
+    const deleteTodoHandler = (id: string): void => {
+        setTodos(todos.filter((todo: Todo) => todo.id !== id))
+    }
+
+    const toggleTodoHandler = (id: string): void => {
+        setTodos(todos.map((todo: Todo) =>
             todo.id === id
                 ? {...todo, isCompleted: !todo.isCompleted}
                 : {...todo}
         ))
     }
 
-    const resetTodosHandler = () => {
+    const resetTodosHandler = (): void => {
         setTodos([])
     }
 
-    const deleteCompletedTodosHandler = () => {
-        setTodos(todos.filter((todo: any) => !todo.isCompleted))
+    const deleteCompletedTodosHandler = (): void => {
+        setTodos(todos.filter((todo: Todo) => !todo.isCompleted))
     }
 
-    const completedTodosCount = todos.filter((todo: any) => todo.isCompleted).length
+    const completedTodosCount: number = todos.filter((todo: Todo) => todo.isCompleted).length
 
     return (
         <div className="App">
             <h1>Todo App</h1>
-            <ItemForm addTodo={addTodoHandler}/>
+            <Form addTodo={addTodoHandler}/>
             {!!todos.length && (
-                <ItemsActions
+                <Actions
                     completedTodosExist={!!completedTodosCount}
                     resetTodos={resetTodosHandler}
                     deleteCompletedTodos={deleteCompletedTodosHandler}
                 />)}
-            <ItemList
+            <List
                 todos={todos}
+                editTodo={editTodoHandler}
                 deleteTodo={deleteTodoHandler}
                 toggleTodo={toggleTodoHandler}
             />

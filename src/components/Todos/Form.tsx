@@ -1,11 +1,10 @@
-import React from 'react'
-import {useState} from 'react'
-import styles from './ItemForm.module.scss'
+import React, {useState} from 'react'
+import styles from './Form.module.scss'
 import Button from '../UI/Button'
 
-function ItemForm({addTodo}: any) {
+function Form({addTodo}: any) {
     const [text, setText] = useState('')
-    const onSubmitHandler = (event: any) => {
+    const onSubmitHandler = (event: React.SyntheticEvent) => {
         event.preventDefault()
         addTodo(text)
         setText('')
@@ -17,7 +16,7 @@ function ItemForm({addTodo}: any) {
                 <input
                     placeholder="Enter new todo"
                     value={text}
-                    onChange={(e) => setText(e.target.value)}
+                    onChange={(event) => setText(event.target.value)}
                 />
                 <Button type="submit" title="Submit">
                     Submit
@@ -27,4 +26,4 @@ function ItemForm({addTodo}: any) {
     )
 }
 
-export default ItemForm
+export default Form

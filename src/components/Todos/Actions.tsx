@@ -1,11 +1,11 @@
 import React from 'react'
 import {RiDeleteBin2Line, RiRefreshLine} from 'react-icons/ri'
 import Button from '../UI/Button'
-import styles from './ItemsActions.module.scss'
+import styles from './Actions.module.scss'
 
-function ItemsActions({resetTodos, deleteCompletedTodos, completedTodosExist}: any) {
+function Actions({resetTodos, deleteCompletedTodos, completedTodosExist}: any) {
     return (
-        <div className={styles.todosActionsContainer}>
+        <div className={styles.actionsContainer}>
             <Button
                 title="Reset Todos"
                 onClick={resetTodos}
@@ -23,4 +23,4 @@ function ItemsActions({resetTodos, deleteCompletedTodos, completedTodosExist}: a
     )
 }
 
-export default ItemsActions
+export default Actions

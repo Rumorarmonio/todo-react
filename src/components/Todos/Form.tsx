@@ -11,14 +11,14 @@ function Form({addTask}: any) {
     }
 
     return (
-        <div className={styles.todoFormContainer}>
+        <div className={styles.container}>
             <form onSubmit={onSubmitHandler}>
                 <input
-                    placeholder="Enter new todo"
+                    placeholder="Enter new task"
                     value={text}
                     onChange={(event) => setText(event.target.value)}
                 />
-                <Button type="submit" title="Submit">
+                <Button type="submit" title="Submit task">
                     Submit
                 </Button>
             </form>

@@ -5,7 +5,7 @@ import {Task} from '../../models'
 
 function List({tasks, editTask, deleteTask, toggleTask}: any) {
     return (
-        <ul className={styles.listContainer}>
+        <ul className={styles.container}>
             {!tasks.length && <h2>Nothing to show</h2>}
             {tasks.map((task: Task) => (
                 <Item

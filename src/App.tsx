@@ -56,17 +56,34 @@ function App() {
         setTasks(tasks.filter((task: Task) => !task.isCompleted))
     }
 
-    const completedTasksCount: number = tasks.filter((task: Task) => task.isCompleted).length
+    const tasksCount: number = tasks.length
 
-    const taskList: Task[] = tasks.filter(FILTER_MAP[filter])
+    const tasksByType: Task[] = tasks.filter(FILTER_MAP[filter])
+
+    const filteredTasksCount: number = tasksByType.length
+
+    const printResult = (count: number, type: string): string => {
+        let word: string = count > 1 ? 'tasks' : 'task'
+        switch (type) {
+            case 'All':
+                return `You have ${count} ${word} in your list`
+            case 'Active':
+                return `You have ${count} ${word} to complete`
+            case 'Completed':
+                return `You have completed ${count} ${word}`
+            default:
+                return 'What?'
+        }
+    }
 
     return (
         <div className="App">
             <h1>Todo List</h1>
+            <h2>What needs to be done?</h2>
             <Form addTask={addTaskHandler}/>
             {!!tasks.length && (
                 <Actions
-                    completedTasksExist={!!completedTasksCount}
+                    completedTasksExist={!!filteredTasksCount}
                     resetTasks={resetTasksHandler}
                     deleteCompletedTasks={deleteCompletedTasksHandler}
                 />)}
@@ -74,17 +91,15 @@ function App() {
                 filterNames={FILTER_NAMES}
                 setFilter={setFilter}
             />
+            {tasksCount > 0 &&
+                <h2>{printResult(filteredTasksCount, filter)}</h2>
+            }
             <List
-                tasks={taskList}
+                tasks={tasksByType}
                 editTask={editTaskHandler}
                 deleteTask={deleteTaskHandler}
                 toggleTask={toggleTaskHandler}
             />
-            {completedTasksCount > 0 &&
-                <h2>{`You have completed ${completedTasksCount}
-                ${completedTasksCount > 1 ? 'tasks' : 'task'}!`}
-                </h2>
-            }
         </div>
     )
 }

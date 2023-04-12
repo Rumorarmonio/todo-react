@@ -8,6 +8,7 @@ function Sorting({filterNames, setFilter}: any) {
             {filterNames.map((name: string) => {
                 return (
                     <Button
+                        title={name + ' tasks'}
                         key={name}
                         name={name}
                         onClick={() => setFilter(name)}

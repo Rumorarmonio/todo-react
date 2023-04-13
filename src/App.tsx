@@ -1,11 +1,12 @@
-import React, {useState} from 'react'
+import React from 'react'
+import {useLocalStorage} from './hooks/useLocalStorage'
 import {v4 as uuidv4} from 'uuid'
 import Form from './components/Todos/Form'
 import List from './components/Todos/List'
 import Actions from './components/Todos/Actions'
+import Sorting from './components/Todos/Sorting'
 import {Task} from './models'
 import './App.scss'
-import Sorting from './components/Todos/Sorting'
 
 const FILTER_MAP: any = {
     All: () => true,
@@ -16,8 +17,8 @@ const FILTER_MAP: any = {
 const FILTER_NAMES = Object.keys(FILTER_MAP)
 
 function App() {
-    const [tasks, setTasks] = useState<Task[]>([])
-    const [filter, setFilter] = useState<string>('All')
+    const [filter, setFilter] = useLocalStorage('All', 'filter')
+    const [tasks, setTasks] = useLocalStorage([], 'tasks')
 
     const addTaskHandler = (text: string): void => {
         const newTask: Task = {
@@ -56,14 +57,12 @@ function App() {
         setTasks(tasks.filter((task: Task) => !task.isCompleted))
     }
 
-    const tasksCount: number = tasks.length
-
     const tasksByType: Task[] = tasks.filter(FILTER_MAP[filter])
 
     const filteredTasksCount: number = tasksByType.length
 
     const printResult = (count: number, type: string): string => {
-        let word: string = count > 1 ? 'tasks' : 'task'
+        let word: string = count != 1 ? 'tasks' : 'task'
         switch (type) {
             case 'All':
                 return `You have ${count} ${word} in your list`
@@ -91,7 +90,7 @@ function App() {
                 filterNames={FILTER_NAMES}
                 setFilter={setFilter}
             />
-            {tasksCount > 0 &&
+            {tasks.length > 0 &&
                 <h2>{printResult(filteredTasksCount, filter)}</h2>
             }
             <List

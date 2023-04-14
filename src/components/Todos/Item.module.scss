@@ -19,6 +19,13 @@
         color: teal;
     }
 
+    &.completedTodo {
+        background-color: unset;
+        border-color: #808080FF;
+        color: #808080FF;
+        text-decoration: line-through;
+    }
+
     &.completedTodo .todoIcon,
     &.completedTodo .editIcon,
     &.completedTodo .checkIcon,
@@ -41,12 +48,6 @@
         padding: 10px 15px;
         border-radius: 5px;
     }
-}
-
-.completedTodo {
-    background-color: unset;
-    border-color: #808080FF;
-    color: #808080FF;
 }
 
 .editIcon,

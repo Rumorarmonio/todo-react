@@ -8,19 +8,19 @@ import Sorting from './components/Todos/Sorting'
 import {Task} from './models'
 import './App.scss'
 
-const FILTER_MAP: any = {
+const FILTERS: any = {
     All: () => true,
     Active: (task: Task) => !task.isCompleted,
     Completed: (task: Task) => task.isCompleted
 }
 
-const FILTER_NAMES = Object.keys(FILTER_MAP)
+const FILTER_NAMES = Object.keys(FILTERS)
 
 function App() {
     const [filter, setFilter] = useLocalStorage('All', 'filter')
     const [tasks, setTasks] = useLocalStorage([], 'tasks')
 
-    const addTaskHandler = (text: string): void => {
+    const addTask = (text: string): void => {
         const newTask: Task = {
             text,
             isCompleted: false,
@@ -29,7 +29,7 @@ function App() {
         setTasks([...tasks, newTask])
     }
 
-    const editTaskHandler = (id: string, newText: string): void => {
+    const editTask = (id: string, newText: string): void => {
         setTasks(tasks.map((task: Task) =>
             task.id === id
                 ? {...task, text: newText}
@@ -37,11 +37,11 @@ function App() {
         ))
     }
 
-    const deleteTaskHandler = (id: string): void => {
+    const deleteTask = (id: string): void => {
         setTasks(tasks.filter((task: Task) => task.id !== id))
     }
 
-    const toggleTaskHandler = (id: string): void => {
+    const toggleTask = (id: string): void => {
         setTasks(tasks.map((task: Task) =>
             task.id === id
                 ? {...task, isCompleted: !task.isCompleted}
@@ -49,17 +49,15 @@ function App() {
         ))
     }
 
-    const resetTasksHandler = (): void => {
+    const deleteAllTasks = (): void => {
         setTasks([])
     }
 
-    const deleteCompletedTasksHandler = (): void => {
+    const deleteCompletedTasks = (): void => {
         setTasks(tasks.filter((task: Task) => !task.isCompleted))
     }
 
-    const tasksByType: Task[] = tasks.filter(FILTER_MAP[filter])
-
-    const filteredTasksCount: number = tasksByType.length
+    const tasksByType: Task[] = tasks.filter(FILTERS[filter])
 
     const printResult = (count: number, type: string): string => {
         let word: string = count != 1 ? 'tasks' : 'task'
@@ -79,25 +77,25 @@ function App() {
         <div className="App">
             <h1>Todo List</h1>
             <h2>What needs to be done?</h2>
-            <Form addTask={addTaskHandler}/>
+            <Form addTask={addTask}/>
             {!!tasks.length && (
                 <Actions
-                    completedTasksExist={!!filteredTasksCount}
-                    resetTasks={resetTasksHandler}
-                    deleteCompletedTasks={deleteCompletedTasksHandler}
+                    completedTasksExist={!!tasks.filter(FILTERS['Completed']).length}
+                    deleteAllTasks={deleteAllTasks}
+                    deleteCompletedTasks={deleteCompletedTasks}
                 />)}
             <Sorting
                 filterNames={FILTER_NAMES}
                 setFilter={setFilter}
             />
             {tasks.length > 0 &&
-                <h2>{printResult(filteredTasksCount, filter)}</h2>
+                <h2>{printResult(tasksByType.length, filter)}</h2>
             }
             <List
                 tasks={tasksByType}
-                editTask={editTaskHandler}
-                deleteTask={deleteTaskHandler}
-                toggleTask={toggleTaskHandler}
+                editTask={editTask}
+                deleteTask={deleteTask}
+                toggleTask={toggleTask}
             />
         </div>
     )

@@ -79,18 +79,19 @@ function App() {
             <h2>What needs to be done?</h2>
             <Form addTask={addTask}/>
             {!!tasks.length && (
-                <Actions
-                    completedTasksExist={!!tasks.filter(FILTERS['Completed']).length}
-                    deleteAllTasks={deleteAllTasks}
-                    deleteCompletedTasks={deleteCompletedTasks}
-                />)}
-            <Sorting
-                filterNames={FILTER_NAMES}
-                setFilter={setFilter}
-            />
-            {tasks.length > 0 &&
-                <h2>{printResult(tasksByType.length, filter)}</h2>
-            }
+                <>
+                    <Actions
+                        completedTasksExist={!!tasks.filter(FILTERS['Completed']).length}
+                        deleteAllTasks={deleteAllTasks}
+                        deleteCompletedTasks={deleteCompletedTasks}
+                    />
+                    <Sorting
+                        filterNames={FILTER_NAMES}
+                        setFilter={setFilter}
+                    />
+                </>
+            )}
+            <h2>{printResult(tasksByType.length, filter)}</h2>
             <List
                 tasks={tasksByType}
                 editTask={editTask}
